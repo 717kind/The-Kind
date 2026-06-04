@@ -6,244 +6,503 @@
 <title>The Kind</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
-<style>   :root {     --ink: #0e0c0a;     --paper: #f5f0e8;     --paper-warm: #ede7d9;     --smudge: #c8b89a;     --faint: #e0d8c8;     --accent: #1a1208;   }   * { margin: 0; padding: 0; box-sizing: border-box; }   html { scroll-behavior: smooth; }   body {     background: var(--paper);     color: var(--ink);     font-family: 'Cormorant Garamond', Georgia, serif;     overflow-x: hidden;     cursor: crosshair;   }   /* Grain texture */   body::before {     content: '';     position: fixed;     inset: 0;     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");     pointer-events: none;     z-index: 999;     opacity: 0.6;   }   /* ── HERO ── */   .hero {     min-height: 100vh;     display: grid;     grid-template-rows: 1fr auto;     padding: 0;     position: relative;     overflow: hidden;   }   .hero-canvas {     position: absolute;     inset: 0;     display: flex;     align-items: center;     justify-content: center;     pointer-events: none;   }   /* Animated concentric rings — the "gathering" visual */   .rings {     position: relative;     width: 600px;     height: 600px;     opacity: 0.06;   }   .ring {     position: absolute;     border: 1px solid var(--ink);     border-radius: 50%;     top: 50%;     left: 50%;     transform: translate(-50%, -50%);     animation: breathe 8s ease-in-out infinite;   }   .ring:nth-child(1) { width: 80px; height: 80px; animation-delay: 0s; }   .ring:nth-child(2) { width: 160px; height: 160px; animation-delay: 0.4s; }   .ring:nth-child(3) { width: 260px; height: 260px; animation-delay: 0.8s; }   .ring:nth-child(4) { width: 370px; height: 370px; animation-delay: 1.2s; }   .ring:nth-child(5) { width: 490px; height: 490px; animation-delay: 1.6s; }   .ring:nth-child(6) { width: 620px; height: 620px; animation-delay: 2s; }   @keyframes breathe {     0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }     50% { transform: translate(-50%, -50%) scale(1.02); opacity: 0.6; }   }   .hero-content {     position: relative;     z-index: 2;     display: flex;     flex-direction: column;     align-items: center;     justify-content: center;     min-height: 100vh;     text-align: center;     padding: 60px 40px;   }   .eyebrow {     font-family: 'Courier Prime', monospace;     font-size: 11px;     letter-spacing: 0.35em;     text-transform: uppercase;     color: var(--smudge);     margin-bottom: 40px;     opacity: 0;     animation: fadeUp 1s ease forwards 0.3s;   }   .title {     font-size: clamp(90px, 18vw, 200px);     font-weight: 300;     line-height: 0.9;     letter-spacing: -0.03em;     margin-bottom: 50px;     opacity: 0;     animation: fadeUp 1.2s ease forwards 0.6s;   }   .title em {     font-style: italic;     font-weight: 300;   }   .tagline {     font-size: clamp(18px, 2.5vw, 26px);     font-weight: 300;     font-style: italic;     line-height: 1.5;     max-width: 520px;     color: #3a3028;     opacity: 0;     animation: fadeUp 1s ease forwards 1s;   }   .scroll-hint {     position: absolute;     bottom: 40px;     left: 50%;     transform: translateX(-50%);     display: flex;     flex-direction: column;     align-items: center;     gap: 12px;     font-family: 'Courier Prime', monospace;     font-size: 10px;     letter-spacing: 0.3em;     text-transform: uppercase;     color: var(--smudge);     opacity: 0;     animation: fadeUp 1s ease forwards 1.8s;   }   .scroll-line {     width: 1px;     height: 50px;     background: var(--smudge);     animation: scrollDown 2s ease-in-out infinite;   }   @keyframes scrollDown {     0% { transform: scaleY(0); transform-origin: top; }     50% { transform: scaleY(1); transform-origin: top; }     51% { transform: scaleY(1); transform-origin: bottom; }     100% { transform: scaleY(0); transform-origin: bottom; }   }   @keyframes fadeUp {     from { opacity: 0; transform: translateY(24px); }     to { opacity: 1; transform: translateY(0); }   }   /* ── DIVIDER ── */   .rule {     display: flex;     align-items: center;     gap: 20px;     padding: 0 60px;     margin: 0;   }   .rule-line { flex: 1; height: 1px; background: var(--faint); }   .rule-mark {     font-family: 'Courier Prime', monospace;     font-size: 10px;     letter-spacing: 0.2em;     color: var(--smudge);   }   /* ── SECTIONS ── */   section {     padding: 120px 60px;     max-width: 1100px;     margin: 0 auto;   }   /* Psychology / Why section */   .why-grid {     display: grid;     grid-template-columns: 1fr 1fr;     gap: 0;     border: 1px solid var(--faint);   }   .why-intro {     grid-column: 1 / -1;     padding: 60px 60px 50px;     border-bottom: 1px solid var(--faint);   }   .section-label {     font-family: 'Courier Prime', monospace;     font-size: 10px;     letter-spacing: 0.35em;     text-transform: uppercase;     color: var(--smudge);     margin-bottom: 28px;     display: block;   }   .why-intro h2 {     font-size: clamp(36px, 5vw, 64px);     font-weight: 300;     line-height: 1.1;     max-width: 600px;   }   .why-intro h2 em { font-style: italic; }   .why-card {     padding: 50px;     border-right: 1px solid var(--faint);     border-bottom: 1px solid var(--faint);     position: relative;     transition: background 0.3s;   }   .why-card:nth-child(even) { border-right: none; }   .why-card:nth-last-child(-n+2) { border-bottom: none; }   .why-card:hover { background: var(--paper-warm); }   .why-number {     font-family: 'Courier Prime', monospace;     font-size: 11px;     color: var(--smudge);     letter-spacing: 0.2em;     margin-bottom: 20px;     display: block;   }   .why-card h3 {     font-size: 22px;     font-weight: 600;     margin-bottom: 16px;     letter-spacing: -0.01em;   }   .why-card p {     font-size: 17px;     font-weight: 300;     line-height: 1.7;     color: #3a3028;   }   .why-card .study {     margin-top: 16px;     font-family: 'Courier Prime', monospace;     font-size: 11px;     color: var(--smudge);     font-style: normal;     letter-spacing: 0.05em;   }   /* ── THE RITUAL ── */   .ritual-section {     padding: 120px 0;     max-width: 1100px;     margin: 0 auto;   }   .ritual-wrap {     display: grid;     grid-template-columns: 1fr 1fr;     gap: 80px;     align-items: start;     padding: 0 60px;   }   .ritual-left h2 {     font-size: clamp(40px, 5vw, 68px);     font-weight: 300;     line-height: 1.05;     margin-bottom: 30px;     letter-spacing: -0.02em;   }   .ritual-left h2 em { font-style: italic; }   .ritual-left p {     font-size: 19px;     font-weight: 300;     line-height: 1.75;     color: #3a3028;     margin-bottom: 20px;   }   .ritual-steps {     display: flex;     flex-direction: column;     gap: 0;   }   .step {     display: grid;     grid-template-columns: 60px 1fr;     border-top: 1px solid var(--faint);     padding: 28px 0;     gap: 20px;     align-items: start;     transition: padding-left 0.3s;     cursor: default;   }   .step:last-child { border-bottom: 1px solid var(--faint); }   .step:hover { padding-left: 12px; }   .step-num {     font-family: 'Courier Prime', monospace;     font-size: 12px;     color: var(--smudge);     padding-top: 4px;     letter-spacing: 0.1em;   }   .step-text h4 {     font-size: 19px;     font-weight: 600;     margin-bottom: 6px;   }   .step-text p {     font-size: 16px;     font-weight: 300;     line-height: 1.6;     color: #4a4038;   }   /* ── GALLERY ── */   .gallery-section {     padding: 100px 60px;     max-width: 1100px;     margin: 0 auto;   }   .gallery-header {     display: flex;     align-items: baseline;     justify-content: space-between;     margin-bottom: 60px;     border-bottom: 1px solid var(--faint);     padding-bottom: 30px;   }   .gallery-header h2 {     font-size: clamp(32px, 4vw, 52px);     font-weight: 300;     letter-spacing: -0.02em;   }   .gallery-count {     font-family: 'Courier Prime', monospace;     font-size: 13px;     color: var(--smudge);     letter-spacing: 0.1em;   }   .gallery-grid {     display: grid;     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));     gap: 1px;     background: var(--faint);   }   .gallery-cell {     background: var(--paper);     aspect-ratio: 1;     display: flex;     flex-direction: column;     align-items: center;     justify-content: center;     gap: 14px;     position: relative;     overflow: hidden;     cursor: pointer;     transition: background 0.25s;   }   .gallery-cell:hover { background: var(--paper-warm); }   .gallery-cell:hover .cell-reveal {     opacity: 1;     transform: translateY(0);   }   .gallery-symbol {     width: 80px;     height: 80px;     display: flex;     align-items: center;     justify-content: center;   }   .gallery-symbol svg {     width: 100%;     height: 100%;     stroke: var(--ink);     fill: none;     stroke-width: 1.5;   }   .cell-reveal {     position: absolute;     bottom: 0;     left: 0;     right: 0;     background: var(--ink);     color: var(--paper);     padding: 10px 14px;     font-family: 'Courier Prime', monospace;     font-size: 10px;     letter-spacing: 0.15em;     opacity: 0;     transform: translateY(6px);     transition: all 0.25s;     text-align: center;   }   /* Empty / add cell */   .gallery-cell.add-cell {     border: 1.5px dashed var(--faint);     background: transparent;     color: var(--smudge);     font-family: 'Courier Prime', monospace;     font-size: 11px;     letter-spacing: 0.2em;     text-transform: uppercase;     flex-direction: column;     gap: 10px;   }   .gallery-cell.add-cell:hover { background: var(--paper-warm); color: var(--ink); border-color: var(--smudge); }   .add-icon { font-size: 28px; font-weight: 300; font-family: sans-serif; }   /* ── CTA / SUBMIT ── */   .cta-section {     background: var(--ink);     color: var(--paper);     padding: 140px 60px;     text-align: center;     position: relative;     overflow: hidden;   }   .cta-section::before {     content: 'THE KIND';     position: absolute;     font-size: 28vw;     font-weight: 300;     letter-spacing: -0.04em;     opacity: 0.04;     top: 50%;     left: 50%;     transform: translate(-50%, -50%);     white-space: nowrap;     pointer-events: none;     font-family: 'Cormorant Garamond', serif;   }   .cta-inner {     position: relative;     max-width: 700px;     margin: 0 auto;   }   .cta-section .section-label { color: #7a7060; }   .cta-section h2 {     font-size: clamp(38px, 6vw, 80px);     font-weight: 300;     line-height: 1.05;     margin-bottom: 30px;     letter-spacing: -0.02em;   }   .cta-section h2 em { font-style: italic; }   .cta-section p {     font-size: 20px;     font-weight: 300;     line-height: 1.7;     color: #b0a890;     margin-bottom: 60px;     font-style: italic;   }   .submit-form {     display: flex;     flex-direction: column;     gap: 20px;     max-width: 480px;     margin: 0 auto;   }   .form-row {     display: grid;     grid-template-columns: 1fr 1fr;     gap: 12px;   }   .field {     display: flex;     flex-direction: column;     gap: 8px;     text-align: left;   }   .field label {     font-family: 'Courier Prime', monospace;     font-size: 10px;     letter-spacing: 0.3em;     text-transform: uppercase;     color: #7a7060;   }   .field input, .field textarea {     background: transparent;     border: 1px solid #3a3028;     color: var(--paper);     padding: 14px 16px;     font-family: 'Cormorant Garamond', serif;     font-size: 17px;     font-weight: 300;     outline: none;     transition: border-color 0.2s;     resize: none;   }   .field input::placeholder, .field textarea::placeholder {     color: #5a5040;     font-style: italic;   }   .field input:focus, .field textarea:focus { border-color: var(--smudge); }   /* Symbol upload area */   .symbol-upload {     border: 1px dashed #3a3028;     padding: 50px 20px;     text-align: center;     cursor: pointer;     transition: border-color 0.2s, background 0.2s;     position: relative;   }   .symbol-upload:hover { border-color: var(--smudge); background: rgba(255,255,255,0.02); }   .symbol-upload p {     font-size: 15px;     color: #6a6050;     margin-bottom: 0;   }   .symbol-upload em { font-style: italic; }   .symbol-preview {     display: none;     max-width: 120px;     max-height: 120px;     margin: 0 auto 12px;     filter: invert(1);   }   .symbol-preview.visible { display: block; }   .upload-input { display: none; }   .btn-submit {     background: var(--paper);     color: var(--ink);     border: none;     padding: 20px 40px;     font-family: 'Cormorant Garamond', serif;     font-size: 19px;     font-weight: 600;     letter-spacing: 0.05em;     cursor: pointer;     transition: background 0.2s, color 0.2s, transform 0.15s;     margin-top: 10px;   }   .btn-submit:hover { background: var(--smudge); transform: translateY(-2px); }   .btn-submit:active { transform: translateY(0); }   /* ── MANIFESTO PULL QUOTE ── */   .pullquote {     padding: 100px 60px;     max-width: 900px;     margin: 0 auto;     text-align: center;   }   .pullquote blockquote {     font-size: clamp(24px, 3.5vw, 44px);     font-weight: 300;     font-style: italic;     line-height: 1.4;     letter-spacing: -0.01em;     color: var(--ink);   }   .pullquote cite {     display: block;     margin-top: 30px;     font-family: 'Courier Prime', monospace;     font-size: 11px;     letter-spacing: 0.3em;     color: var(--smudge);     font-style: normal;     text-transform: uppercase;   }   /* ── FOOTER ── */   footer {     border-top: 1px solid var(--faint);     padding: 40px 60px;     display: flex;     align-items: center;     justify-content: space-between;     max-width: 100%;   }   .footer-brand {     font-size: 22px;     font-weight: 300;     letter-spacing: -0.01em;     font-style: italic;   }   .footer-note {     font-family: 'Courier Prime', monospace;     font-size: 10px;     letter-spacing: 0.25em;     color: var(--smudge);     text-transform: uppercase;   }   /* ── TOAST ── */   .toast {     position: fixed;     bottom: 40px;     left: 50%;     transform: translateX(-50%) translateY(20px);     background: var(--ink);     color: var(--paper);     padding: 16px 32px;     font-family: 'Courier Prime', monospace;     font-size: 12px;     letter-spacing: 0.2em;     text-transform: uppercase;     opacity: 0;     transition: all 0.4s;     pointer-events: none;     z-index: 1000;   }   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }   /* ── RESPONSIVE ── */   @media (max-width: 768px) {     section, .gallery-section, .pullquote { padding: 80px 28px; }     .why-grid { border: none; }     .why-intro { padding: 0 0 40px; border: none; grid-column: 1; }     .why-card { padding: 36px 0; border-right: none; border-bottom: 1px solid var(--faint); border-left: none; }     .why-grid { grid-template-columns: 1fr; }     .ritual-wrap { grid-template-columns: 1fr; gap: 50px; padding: 0 28px; }     .gallery-section { padding: 80px 28px; }     .gallery-header { flex-direction: column; gap: 10px; }     .cta-section { padding: 100px 28px; }     .form-row { grid-template-columns: 1fr; }     footer { flex-direction: column; gap: 14px; text-align: center; padding: 36px 28px; }     .rule { padding: 0 28px; }     .ritual-section { padding: 80px 0; }   } </style>
+<style>
+  :root {
+    --ink: #0e0c0a;
+    --paper: #f5f0e8;
+    --paper-warm: #ede7d9;
+    --smudge: #c8b89a;
+    --faint: #e0d8c8;
+    --accent: #1a1208;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0.6;
+  }
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-canvas {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .rings { position: relative; width: 600px; height: 600px; opacity: 0.06; }
+  .ring {
+    position: absolute;
+    border: 1px solid var(--ink);
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: breathe 8s ease-in-out infinite;
+  }
+  .ring:nth-child(1) { width: 80px; height: 80px; animation-delay: 0s; }
+  .ring:nth-child(2) { width: 160px; height: 160px; animation-delay: 0.4s; }
+  .ring:nth-child(3) { width: 260px; height: 260px; animation-delay: 0.8s; }
+  .ring:nth-child(4) { width: 370px; height: 370px; animation-delay: 1.2s; }
+  .ring:nth-child(5) { width: 490px; height: 490px; animation-delay: 1.6s; }
+  .ring:nth-child(6) { width: 620px; height: 620px; animation-delay: 2s; }
+  @keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+    50% { transform: translate(-50%, -50%) scale(1.02); opacity: 0.6; }
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; text-align: center;
+    padding: 60px 40px;
+  }
+  .eyebrow {
+    font-family: 'Courier Prime', monospace;
+    font-size: 11px; letter-spacing: 0.35em;
+    text-transform: uppercase; color: var(--smudge);
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 1s ease forwards 0.3s;
+  }
+  .title {
+    font-size: clamp(90px, 18vw, 200px);
+    font-weight: 300; line-height: 0.9;
+    letter-spacing: -0.03em; margin-bottom: 50px;
+    opacity: 0; animation: fadeUp 1.2s ease forwards 0.6s;
+  }
+  .title em { font-style: italic; font-weight: 300; }
+  .tagline {
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 300; font-style: italic;
+    line-height: 1.5; max-width: 520px;
+    color: #3a3028;
+    opacity: 0; animation: fadeUp 1s ease forwards 1s;
+  }
+  .scroll-hint {
+    position: absolute; bottom: 40px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 10px; letter-spacing: 0.3em;
+    text-transform: uppercase; color: var(--smudge);
+    opacity: 0; animation: fadeUp 1s ease forwards 1.8s;
+  }
+  .scroll-line { width: 1px; height: 50px; background: var(--smudge); animation: scrollDown 2s ease-in-out infinite; }
+  @keyframes scrollDown {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .rule { display: flex; align-items: center; gap: 20px; padding: 0 60px; margin: 0; }
+  .rule-line { flex: 1; height: 1px; background: var(--faint); }
+  .rule-mark { font-family: 'Courier Prime', monospace; font-size: 10px; letter-spacing: 0.2em; color: var(--smudge); }
+  section { padding: 120px 60px; max-width: 1100px; margin: 0 auto; }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--faint); }
+  .why-intro { grid-column: 1 / -1; padding: 60px 60px 50px; border-bottom: 1px solid var(--faint); }
+  .section-label { font-family: 'Courier Prime', monospace; font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--smudge); margin-bottom: 28px; display: block; }
+  .why-intro h2 { font-size: clamp(36px, 5vw, 64px); font-weight: 300; line-height: 1.1; max-width: 600px; }
+  .why-intro h2 em { font-style: italic; }
+  .why-card { padding: 50px; border-right: 1px solid var(--faint); border-bottom: 1px solid var(--faint); position: relative; transition: background 0.3s; }
+  .why-card:nth-child(even) { border-right: none; }
+  .why-card:nth-last-child(-n+2) { border-bottom: none; }
+  .why-card:hover { background: var(--paper-warm); }
+  .why-number { font-family: 'Courier Prime', monospace; font-size: 11px; color: var(--smudge); letter-spacing: 0.2em; margin-bottom: 20px; display: block; }
+  .why-card h3 { font-size: 22px; font-weight: 600; margin-bottom: 16px; letter-spacing: -0.01em; }
+  .why-card p { font-size: 17px; font-weight: 300; line-height: 1.7; color: #3a3028; }
+  .why-card .study { margin-top: 16px; font-family: 'Courier Prime', monospace; font-size: 11px; color: var(--smudge); font-style: normal; letter-spacing: 0.05em; }
+  .ritual-section { padding: 120px 0; max-width: 1100px; margin: 0 auto; }
+  .ritual-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; padding: 0 60px; }
+  .ritual-left h2 { font-size: clamp(40px, 5vw, 68px); font-weight: 300; line-height: 1.05; margin-bottom: 30px; letter-spacing: -0.02em; }
+  .ritual-left h2 em { font-style: italic; }
+  .ritual-left p { font-size: 19px; font-weight: 300; line-height: 1.75; color: #3a3028; margin-bottom: 20px; }
+  .ritual-steps { display: flex; flex-direction: column; gap: 0; }
+  .step { display: grid; grid-template-columns: 60px 1fr; border-top: 1px solid var(--faint); padding: 28px 0; gap: 20px; align-items: start; transition: padding-left 0.3s; cursor: default; }
+  .step:last-child { border-bottom: 1px solid var(--faint); }
+  .step:hover { padding-left: 12px; }
+  .step-num { font-family: 'Courier Prime', monospace; font-size: 12px; color: var(--smudge); padding-top: 4px; letter-spacing: 0.1em; }
+  .step-text h4 { font-size: 19px; font-weight: 600; margin-bottom: 6px; }
+  .step-text p { font-size: 16px; font-weight: 300; line-height: 1.6; color: #4a4038; }
+  .gallery-section { padding: 100px 60px; max-width: 1100px; margin: 0 auto; }
+  .gallery-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 60px; border-bottom: 1px solid var(--faint); padding-bottom: 30px; }
+  .gallery-header h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 300; letter-spacing: -0.02em; }
+  .gallery-count { font-family: 'Courier Prime', monospace; font-size: 13px; color: var(--smudge); letter-spacing: 0.1em; }
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1px; background: var(--faint); }
+  .gallery-cell { background: var(--paper); aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; position: relative; overflow: hidden; cursor: pointer; transition: background 0.25s; }
+  .gallery-cell:hover { background: var(--paper-warm); }
+  .gallery-cell:hover .cell-reveal { opacity: 1; transform: translateY(0); }
+  .gallery-symbol { width: 80px; height: 80px; display: flex; align-items: center; justify-content: center; }
+  .gallery-symbol svg { width: 100%; height: 100%; stroke: var(--ink); fill: none; stroke-width: 1.5; }
+  .cell-reveal { position: absolute; bottom: 0; left: 0; right: 0; background: var(--ink); color: var(--paper); padding: 10px 14px; font-family: 'Courier Prime', monospace; font-size: 10px; letter-spacing: 0.15em; opacity: 0; transform: translateY(6px); transition: all 0.25s; text-align: center; }
+  .gallery-cell.add-cell { border: 1.5px dashed var(--faint); background: transparent; color: var(--smudge); font-family: 'Courier Prime', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; flex-direction: column; gap: 10px; }
+  .gallery-cell.add-cell:hover { background: var(--paper-warm); color: var(--ink); border-color: var(--smudge); }
+  .add-icon { font-size: 28px; font-weight: 300; font-family: sans-serif; }
+  .cta-section { background: var(--ink); color: var(--paper); padding: 140px 60px; text-align: center; position: relative; overflow: hidden; }
+  .cta-section::before {
+    content: 'THE KIND';
+    position: absolute; font-size: 28vw; font-weight: 300;
+    letter-spacing: -0.04em; opacity: 0.04;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    white-space: nowrap; pointer-events: none;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .cta-inner { position: relative; max-width: 700px; margin: 0 auto; }
+  .cta-section .section-label { color: #7a7060; }
+  .cta-section h2 { font-size: clamp(38px, 6vw, 80px); font-weight: 300; line-height: 1.05; margin-bottom: 30px; letter-spacing: -0.02em; }
+  .cta-section h2 em { font-style: italic; }
+  .cta-section p { font-size: 20px; font-weight: 300; line-height: 1.7; color: #b0a890; margin-bottom: 60px; font-style: italic; }
+  .submit-form { display: flex; flex-direction: column; gap: 20px; max-width: 480px; margin: 0 auto; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .field { display: flex; flex-direction: column; gap: 8px; text-align: left; }
+  .field label { font-family: 'Courier Prime', monospace; font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: #7a7060; }
+  .field input, .field textarea { background: transparent; border: 1px solid #3a3028; color: var(--paper); padding: 14px 16px; font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 300; outline: none; transition: border-color 0.2s; resize: none; }
+  .field input::placeholder, .field textarea::placeholder { color: #5a5040; font-style: italic; }
+  .field input:focus, .field textarea:focus { border-color: var(--smudge); }
+  .symbol-upload { border: 1px dashed #3a3028; padding: 50px 20px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; }
+  .symbol-upload:hover { border-color: var(--smudge); background: rgba(255,255,255,0.02); }
+  .symbol-upload p { font-size: 15px; color: #6a6050; margin-bottom: 0; }
+  .symbol-upload em { font-style: italic; }
+  .symbol-preview { display: none; max-width: 120px; max-height: 120px; margin: 0 auto 12px; filter: invert(1); }
+  .symbol-preview.visible { display: block; }
+  .upload-input { display: none; }
+  .btn-submit { background: var(--paper); color: var(--ink); border: none; padding: 20px 40px; font-family: 'Cormorant Garamond', serif; font-size: 19px; font-weight: 600; letter-spacing: 0.05em; cursor: pointer; transition: background 0.2s, color 0.2s, transform 0.15s; margin-top: 10px; }
+  .btn-submit:hover { background: var(--smudge); transform: translateY(-2px); }
+  .btn-submit:active { transform: translateY(0); }
+  .pullquote { padding: 100px 60px; max-width: 900px; margin: 0 auto; text-align: center; }
+  .pullquote blockquote { font-size: clamp(24px, 3.5vw, 44px); font-weight: 300; font-style: italic; line-height: 1.4; letter-spacing: -0.01em; color: var(--ink); }
+  .pullquote cite { display: block; margin-top: 30px; font-family: 'Courier Prime', monospace; font-size: 11px; letter-spacing: 0.3em; color: var(--smudge); font-style: normal; text-transform: uppercase; }
+  footer { border-top: 1px solid var(--faint); padding: 40px 60px; display: flex; align-items: center; justify-content: space-between; max-width: 100%; }
+  .footer-brand { font-size: 22px; font-weight: 300; letter-spacing: -0.01em; font-style: italic; }
+  .footer-note { font-family: 'Courier Prime', monospace; font-size: 10px; letter-spacing: 0.25em; color: var(--smudge); text-transform: uppercase; }
+  .toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--paper); padding: 16px 32px; font-family: 'Courier Prime', monospace; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0; transition: all 0.4s; pointer-events: none; z-index: 1000; }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  @media (max-width: 768px) {
+    section, .gallery-section, .pullquote { padding: 80px 28px; }
+    .why-grid { border: none; }
+    .why-intro { padding: 0 0 40px; border: none; grid-column: 1; }
+    .why-card { padding: 36px 0; border-right: none; border-bottom: 1px solid var(--faint); border-left: none; }
+    .why-grid { grid-template-columns: 1fr; }
+    .ritual-wrap { grid-template-columns: 1fr; gap: 50px; padding: 0 28px; }
+    .gallery-section { padding: 80px 28px; }
+    .gallery-header { flex-direction: column; gap: 10px; }
+    .cta-section { padding: 100px 28px; }
+    .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 14px; text-align: center; padding: 36px 28px; }
+    .rule { padding: 0 28px; }
+    .ritual-section { padding: 80px 0; }
+  }
+</style>
 </head>
 <body>
-<!-- HERO -->
+
 <section class="hero">
-<div class="hero-canvas">
-<div class="rings">
-<div class="ring">
-</div>
-<div class="ring">
-</div>
-<div class="ring">
-</div>
-<div class="ring">
-</div>
-<div class="ring">
-</div>
-<div class="ring">
-</div>
-</div>
-</div>
-<div class="hero-content">
-<span class="eyebrow">A gathering. A mark. A promise.</span>
-<h1 class="title">
-<em>The</em>
-<br>Kind</h1>
-<p class="tagline">Sit with your people. Draw one symbol. Declare who you are.</p>
-</div>
-<div class="scroll-hint">
-<div class="scroll-line">
-</div>
-<span>Read on</span>
-</div>
+  <div class="hero-canvas">
+    <div class="rings">
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="ring"></div>
+    </div>
+  </div>
+  <div class="hero-content">
+    <span class="eyebrow">A gathering. A mark. A promise.</span>
+    <h1 class="title"><em>The</em><br>Kind</h1>
+    <p class="tagline">Sit with your people. Draw one symbol. Declare who you are.</p>
+  </div>
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Read on</span>
+  </div>
 </section>
-<!-- DIVIDER -->
+
 <div class="rule">
-<div class="rule-line">
+  <div class="rule-line"></div>
+  <span class="rule-mark">◦</span>
+  <div class="rule-line"></div>
 </div>
-<span class="rule-mark">◦</span>
-<div class="rule-line">
-</div>
-</div>
-<!-- PULL QUOTE -->
+
 <div class="pullquote">
-<blockquote>     "The symbol isn't decoration. It's a contract. <em>This is us. We stand for this.</em>"   </blockquote>
-<cite>On the act of making your mark</cite>
+  <blockquote>"The symbol isn't decoration. It's a contract. <em>This is us. We stand for this.</em>"</blockquote>
+  <cite>On the act of making your mark</cite>
 </div>
-<!-- WHY IT WORKS -->
+
 <section>
-<div class="why-grid">
-<div class="why-intro">
-<span class="section-label">The Psychology</span>
-<h2>Why this <em>works</em> on us</h2>
-</div>
-<div class="why-card">
-<span class="why-number">01 —</span>
-<h3>The Marking Instinct</h3>
-<p>Humans are the only species that marks territory with meaning rather than instinct. When a group creates a shared symbol, they're doing what every tribe has done since Lascaux — saying "we were here, we are together, this is ours."</p>
-<span class="study">Territorial Cognition · Anthropology</span>
-</div>
-<div class="why-card">
-<span class="why-number">02 —</span>
-<h3>The Dunbar Core</h3>
-<p>Robin Dunbar's research shows humans can maintain ~150 relationships. But the inner circle — the ones you'd die for — caps at 5 to 15. This gathering forces you to ask who's actually in yours. Most people never ask that out loud.</p>
-<span class="study">Dunbar, R. (1992) · Social Brain Hypothesis</span>
-</div>
-<div class="why-card">
-<span class="why-number">03 —</span>
-<h3>The Synchrony Effect</h3>
-<p>Creating together — moving, making, revealing — increases cooperation and trust more than conversation alone. The moment of "they saw us the same way" is real, measurable, and unforgettable.</p>
-<span class="study">Wiltermuth & Heath (2009) · Synchrony Study</span>
-</div>
-<div class="why-card">
-<span class="why-number">04 —</span>
-<h3>The Ritual Void</h3>
-<p>Modern life has almost no low-stakes rituals. We have weddings, funerals, graduations — expensive, infrequent, high-pressure. What's missing is the casual sacred. The gathering that matters but doesn't cost a thing.</p>
-<span class="study">Ritual Theory · Anthropology of the Everyday</span>
-</div>
-<div class="why-card">
-<span class="why-number">05 —</span>
-<h3>Forced Scarcity</h3>
-<p>No phones. One pen. One page. Constraints strip away infinite options and force you to reach inward. What comes out of constraint is always more honest than what comes out of abundance.</p>
-<span class="study">Cialdini · Principle of Scarcity</span>
-</div>
-<div class="why-card">
-<span class="why-number">06 —</span>
-<h3>Identity Fusion</h3>
-<p>When individual identity merges with group identity, people become willing to sacrifice for that group. A shared symbol is one of the fastest-known paths to that fusion. The flag is a contract you made together.</p>
-<span class="study">Swann et al. (2009) · Identity Fusion Theory</span>
-</div>
-</div>
+  <div class="why-grid">
+    <div class="why-intro">
+      <span class="section-label">The Psychology</span>
+      <h2>Why this <em>works</em> on us</h2>
+    </div>
+    <div class="why-card">
+      <span class="why-number">01 —</span>
+      <h3>The Marking Instinct</h3>
+      <p>Humans are the only species that marks territory with meaning rather than instinct. When a group creates a shared symbol, they're doing what every tribe has done since Lascaux — saying "we were here, we are together, this is ours."</p>
+      <span class="study">Territorial Cognition · Anthropology</span>
+    </div>
+    <div class="why-card">
+      <span class="why-number">02 —</span>
+      <h3>The Dunbar Core</h3>
+      <p>Robin Dunbar's research shows humans can maintain ~150 relationships. But the inner circle — the ones you'd die for — caps at 5 to 15. This gathering forces you to ask who's actually in yours. Most people never ask that out loud.</p>
+      <span class="study">Dunbar, R. (1992) · Social Brain Hypothesis</span>
+    </div>
+    <div class="why-card">
+      <span class="why-number">03 —</span>
+      <h3>The Synchrony Effect</h3>
+      <p>Creating together — moving, making, revealing — increases cooperation and trust more than conversation alone. The moment of "they saw us the same way" is real, measurable, and unforgettable.</p>
+      <span class="study">Wiltermuth & Heath (2009) · Synchrony Study</span>
+    </div>
+    <div class="why-card">
+      <span class="why-number">04 —</span>
+      <h3>The Ritual Void</h3>
+      <p>Modern life has almost no low-stakes rituals. We have weddings, funerals, graduations — expensive, infrequent, high-pressure. What's missing is the casual sacred. The gathering that matters but doesn't cost a thing.</p>
+      <span class="study">Ritual Theory · Anthropology of the Everyday</span>
+    </div>
+    <div class="why-card">
+      <span class="why-number">05 —</span>
+      <h3>Forced Scarcity</h3>
+      <p>No phones. One pen. One page. Constraints strip away infinite options and force you to reach inward. What comes out of constraint is always more honest than what comes out of abundance.</p>
+      <span class="study">Cialdini · Principle of Scarcity</span>
+    </div>
+    <div class="why-card">
+      <span class="why-number">06 —</span>
+      <h3>Identity Fusion</h3>
+      <p>When individual identity merges with group identity, people become willing to sacrifice for that group. A shared symbol is one of the fastest-known paths to that fusion. The flag is a contract you made together.</p>
+      <span class="study">Swann et al. (2009) · Identity Fusion Theory</span>
+    </div>
+  </div>
 </section>
-<!-- THE RITUAL -->
+
 <div class="ritual-section">
-<div class="ritual-wrap">
-<div class="ritual-left">
-<span class="section-label">The Ritual</span>
-<h2>How to <em>do</em> it</h2>
-<p>No equipment. No prizes. No phones. Just your people, a field or a kitchen table, and the question: <em>what does this group look like as a single mark?</em>
-</p>
-<p>The explaining afterward — "why did you draw that?" — is where the real thing happens.</p>
+  <div class="ritual-wrap">
+    <div class="ritual-left">
+      <span class="section-label">The Ritual</span>
+      <h2>How to <em>do</em> it</h2>
+      <p>No equipment. No prizes. No phones. Just your people, a field or a kitchen table, and the question: <em>what does this group look like as a single mark?</em></p>
+      <p>The explaining afterward — "why did you draw that?" — is where the real thing happens.</p>
+    </div>
+    <div class="ritual-steps">
+      <div class="step">
+        <span class="step-num">01 —</span>
+        <div class="step-text"><h4>Gather outside</h4><p>Nature is preferred. Parks, backyards, empty fields. Somewhere without the pull of a screen or a clock.</p></div>
+      </div>
+      <div class="step">
+        <span class="step-num">02 —</span>
+        <div class="step-text"><h4>One pen. One page.</h4><p>Each person gets a single sheet of white paper and a black pen. No phones for reference. No erasing, ideally.</p></div>
+      </div>
+      <div class="step">
+        <span class="step-num">03 —</span>
+        <div class="step-text"><h4>Draw in silence</h4><p>No discussion beforehand. Each person draws a symbol that represents the group. Black on white. No words. Just a mark.</p></div>
+      </div>
+      <div class="step">
+        <span class="step-num">04 —</span>
+        <div class="step-text"><h4>Reveal together</h4><p>Turn them over at the same time. Talk about what you each drew and why. This is the ceremony. This is the thing.</p></div>
+      </div>
+      <div class="step">
+        <span class="step-num">05 —</span>
+        <div class="step-text"><h4>Choose your symbol</h4><p>Pick one — or combine elements. Photograph it on white paper, clean light, high contrast. That's your mark.</p></div>
+      </div>
+      <div class="step">
+        <span class="step-num">06 —</span>
+        <div class="step-text"><h4>Submit it here</h4><p>Add your symbol to the living gallery below. A tapestry of kinds, declaring themselves one mark at a time.</p></div>
+      </div>
+    </div>
+  </div>
 </div>
-<div class="ritual-steps">
-<div class="step">
-<span class="step-num">01 —</span>
-<div class="step-text">
-<h4>Gather outside</h4>
-<p>Nature is preferred. Parks, backyards, empty fields. Somewhere without the pull of a screen or a clock.</p>
-</div>
-</div>
-<div class="step">
-<span class="step-num">02 —</span>
-<div class="step-text">
-<h4>One pen. One page.</h4>
-<p>Each person gets a single sheet of white paper and a black pen. No phones for reference. No erasing, ideally.</p>
-</div>
-</div>
-<div class="step">
-<span class="step-num">03 —</span>
-<div class="step-text">
-<h4>Draw in silence</h4>
-<p>No discussion beforehand. Each person draws a symbol that represents the group. Black on white. No words. Just a mark.</p>
-</div>
-</div>
-<div class="step">
-<span class="step-num">04 —</span>
-<div class="step-text">
-<h4>Reveal together</h4>
-<p>Turn them over at the same time. Talk about what you each drew and why. This is the ceremony. This is the thing.</p>
-</div>
-</div>
-<div class="step">
-<span class="step-num">05 —</span>
-<div class="step-text">
-<h4>Choose your symbol</h4>
-<p>Pick one — or combine elements. Photograph it on white paper, clean light, high contrast. That's your mark.</p>
-</div>
-</div>
-<div class="step">
-<span class="step-num">06 —</span>
-<div class="step-text">
-<h4>Submit it here</h4>
-<p>Add your symbol to the living gallery below. A tapestry of kinds, declaring themselves one mark at a time.</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- DIVIDER -->
+
 <div class="rule">
-<div class="rule-line">
+  <div class="rule-line"></div>
+  <span class="rule-mark">◦</span>
+  <div class="rule-line"></div>
 </div>
-<span class="rule-mark">◦</span>
-<div class="rule-line">
-</div>
-</div>
-<!-- GALLERY -->
+
 <div class="gallery-section">
-<div class="gallery-header">
-<h2>The Living Gallery</h2>
-<span class="gallery-count" id="kindCount">— kinds declared</span>
+  <div class="gallery-header">
+    <h2>The Living Gallery</h2>
+    <span class="gallery-count" id="kindCount">0 kinds declared</span>
+  </div>
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gallery-cell add-cell" onclick="document.getElementById('submitSection').scrollIntoView({behavior:'smooth'})">
+      <span class="add-icon">+</span>
+      <span>Add yours</span>
+    </div>
+  </div>
 </div>
-<div class="gallery-grid" id="galleryGrid">
-<!-- Symbols rendered by JS -->
-<div class="gallery-cell add-cell" onclick="document.getElementById('submitSection').scrollIntoView({behavior:'smooth'})">
-<span class="add-icon">+</span>
-<span>Add yours</span>
-</div>
-</div>
-</div>
-<!-- CTA / SUBMIT -->
+
 <div class="cta-section" id="submitSection">
-<div class="cta-inner">
-<span class="section-label">Enroll in the Tapestry</span>
-<h2>Submit your <em>Kind</em>
-</h2>
-<p>No winner. No loser. Just proof you showed up with your people and made something real.</p>
-<div class="submit-form">
-<div class="form-row">
-<div class="field">
-<label>Group name</label>
-<input type="text" id="groupName" placeholder="What do you call yourselves?" maxlength="40">
+  <div class="cta-inner">
+    <span class="section-label">Enroll in the Tapestry</span>
+    <h2>Submit your <em>Kind</em></h2>
+    <p>No winner. No loser. Just proof you showed up with your people and made something real.</p>
+    <div class="submit-form">
+      <div class="form-row">
+        <div class="field">
+          <label>Group name</label>
+          <input type="text" id="groupName" placeholder="What do you call yourselves?" maxlength="40">
+        </div>
+        <div class="field">
+          <label>Location</label>
+          <input type="text" id="groupLocation" placeholder="City, coast, somewhere" maxlength="40">
+        </div>
+      </div>
+      <div class="field">
+        <label>What does it mean?</label>
+        <textarea id="groupMeaning" rows="3" placeholder="A circle because we rotate. Three lines because we face outward. A dot because..." maxlength="200"></textarea>
+      </div>
+      <div class="field">
+        <label>Your symbol</label>
+        <div class="symbol-upload" id="uploadZone">
+          <img class="symbol-preview" id="symbolPreview" src="" alt="Your symbol">
+          <p><em>Click to upload your mark</em><br>Black on white. Clean light.</p>
+          <input type="file" class="upload-input" id="uploadInput" accept="image/*">
+        </div>
+      </div>
+      <button class="btn-submit" onclick="handleSubmit()">Add to the gallery</button>
+    </div>
+  </div>
 </div>
-<div class="field">
-<label>Location</label>
-<input type="text" id="groupLocation" placeholder="City, coast, somewhere" maxlength="40">
-</div>
-</div>
-<div class="field">
-<label>What does it mean?</label>
-<textarea id="groupMeaning" rows="3" placeholder="A circle because we rotate. Three lines because we face outward. A dot because..." maxlength="200">
-</textarea>
-</div>
-<div class="field">
-<label>Your symbol</label>
-<div class="symbol-upload" id="uploadZone">
-<img class="symbol-preview" id="symbolPreview" src="" alt="Your symbol">
-<p>
-<em>Click to upload your mark</em>
-<br>Black on white. Clean light.</p>
-<input type="file" class="upload-input" id="uploadInput" accept="image/*">
-</div>
-</div>
-<button class="btn-submit" onclick="handleSubmit()">Add to the gallery</button>
-</div>
-</div>
-</div>
-<!-- FOOTER -->
+
 <footer>
-<span class="footer-brand">
-<em>The Kind</em>
-</span>
-<span class="footer-note">A gathering. Not a contest.</span>
+  <span class="footer-brand"><em>The Kind</em></span>
+  <span class="footer-note">A gathering. Not a contest.</span>
 </footer>
-<div class="toast" id="toast">
-</div>
-<script> // ── Sample symbols (SVG paths representing abstract marks) ── const sampleKinds = [   {     name: "The Three", location: "Galway, Ireland",     meaning: "We each face a different direction so nothing gets past us.",     svg: `<svg viewBox="0 0 80 80">
-<line x1="40" y1="10" x2="40" y2="70"/>
-<line x1="10" y1="55" x2="70" y2="55"/>
-<line x1="20" y1="20" x2="60" y2="60"/>
-</svg>`   },   {     name: "Unnamed", location: "Sonoma, CA",     meaning: "A circle inside a circle. The inner one is us. The outer one is everyone we protect.",     svg: `<svg viewBox="0 0 80 80">
-<circle cx="40" cy="40" r="28"/>
-<circle cx="40" cy="40" r="10"/>
-</svg>`   },   {     name: "The Five", location: "East London",     meaning: "Five points. No top. No head. Just five.",     svg: `<svg viewBox="0 0 80 80">
-<polygon points="40,8 70,32 58,66 22,66 10,32"/>
-</svg>`   },   {     name: "—", location: "Rural Montana",     meaning: "A single vertical line. We go up. That's all.",     svg: `<svg viewBox="0 0 80 80">
-<line x1="40" y1="12" x2="40" y2="68" stroke-width="2"/>
-</svg>`   },   {     name: "The Spiral", location: "Wellington, NZ",     meaning: "We never stop changing. But we always circle back.",     svg: `<svg viewBox="0 0 80 80">
-<path d="M40,40 m0,-22 a22,22 0 1,0 22,22 a14,14 0 1,1 -14,-14 a6,6 0 1,0 6,6"/>
-</svg>`   },   {     name: "Us", location: "Cape Town",     meaning: "Two marks. Same height. Never one above the other.",     svg: `<svg viewBox="0 0 80 80">
-<line x1="28" y1="16" x2="28" y2="64"/>
-<line x1="52" y1="16" x2="52" y2="64"/>
-</svg>`   },   {     name: "The Fold", location: "Osaka",     meaning: "We fold inward when things get hard. The crease is the strength.",     svg: `<svg viewBox="0 0 80 80">
-<polyline points="14,20 40,60 66,20"/>
-</svg>`   },   {     name: "Unnamed", location: "Quebec",     meaning: "A cross with no end points. Open in every direction.",     svg: `<svg viewBox="0 0 80 80">
-<line x1="40" y1="10" x2="40" y2="70"/>
-<line x1="10" y1="40" x2="70" y2="40"/>
-</svg>`   }, ]; // Render gallery function renderGallery() {   const grid = document.getElementById('galleryGrid');   const countEl = document.getElementById('kindCount');   // Load saved submissions   const saved = JSON.parse(localStorage.getItem('theKind_submissions') || '[]');   const allKinds = [...sampleKinds, ...saved];   countEl.textContent = allKinds.length + ' kinds declared';   // Clear existing (keep add cell)   const addCell = grid.querySelector('.add-cell');   grid.innerHTML = '';   allKinds.forEach(k => {     const cell = document.createElement('div');     cell.className = 'gallery-cell';     cell.innerHTML = `       <div class="gallery-symbol">${k.svg}</div>
-<div class="cell-reveal">${k.name} · ${k.location}</div>     `;     cell.title = k.meaning;     grid.appendChild(cell);   });   grid.appendChild(addCell); } // Upload handling const uploadZone = document.getElementById('uploadZone'); const uploadInput = document.getElementById('uploadInput'); const symbolPreview = document.getElementById('symbolPreview'); uploadZone.addEventListener('click', () => uploadInput.click()); uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.style.borderColor = 'var(--smudge)'; }); uploadZone.addEventListener('dragleave', () => uploadZone.style.borderColor = ''); uploadZone.addEventListener('drop', e => {   e.preventDefault();   uploadZone.style.borderColor = '';   const file = e.dataTransfer.files[0];   if (file) loadFile(file); }); uploadInput.addEventListener('change', () => { if (uploadInput.files[0]) loadFile(uploadInput.files[0]); }); let uploadedDataUrl = null; function loadFile(file) {   const reader = new FileReader();   reader.onload = e => {     uploadedDataUrl = e.target.result;     symbolPreview.src = uploadedDataUrl;     symbolPreview.classList.add('visible');     uploadZone.querySelector('p').style.display = 'none';   };   reader.readAsDataURL(file); } function handleSubmit() {   const name = document.getElementById('groupName').value.trim();   const location = document.getElementById('groupLocation').value.trim();   const meaning = document.getElementById('groupMeaning').value.trim();   if (!name) { showToast('Give your group a name.'); return; }   if (!uploadedDataUrl) { showToast('Upload your symbol first.'); return; }   const entry = {     name: name || '—',     location: location || 'Somewhere',     meaning: meaning || '',     svg: `<img src="${uploadedDataUrl}" style="width:70px;height:70px;object-fit:contain;filter:none;" alt="${name}">`   };   const saved = JSON.parse(localStorage.getItem('theKind_submissions') || '[]');   saved.push(entry);   localStorage.setItem('theKind_submissions', JSON.stringify(saved));   // Reset   document.getElementById('groupName').value = '';   document.getElementById('groupLocation').value = '';   document.getElementById('groupMeaning').value = '';   symbolPreview.src = '';   symbolPreview.classList.remove('visible');   uploadZone.querySelector('p').style.display = '';   uploadedDataUrl = null;   renderGallery();   showToast('Your kind is in the tapestry.');   setTimeout(() => {     document.getElementById('galleryGrid').scrollIntoView({ behavior: 'smooth' });   }, 600); } function showToast(msg) {   const t = document.getElementById('toast');   t.textContent = msg;   t.classList.add('show');   setTimeout(() => t.classList.remove('show'), 3200); } // Init renderGallery(); </script>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const sampleKinds = [
+  { name: "The Three", location: "Galway, Ireland", meaning: "We each face a different direction so nothing gets past us.", svg: `<svg viewBox="0 0 80 80"><line x1="40" y1="10" x2="40" y2="70"/><line x1="10" y1="55" x2="70" y2="55"/><line x1="20" y1="20" x2="60" y2="60"/></svg>` },
+  { name: "Unnamed", location: "Sonoma, CA", meaning: "A circle inside a circle. The inner one is us. The outer one is everyone we protect.", svg: `<svg viewBox="0 0 80 80"><circle cx="40" cy="40" r="28"/><circle cx="40" cy="40" r="10"/></svg>` },
+  { name: "The Five", location: "East London", meaning: "Five points. No top. No head. Just five.", svg: `<svg viewBox="0 0 80 80"><polygon points="40,8 70,32 58,66 22,66 10,32"/></svg>` },
+  { name: "—", location: "Rural Montana", meaning: "A single vertical line. We go up. That's all.", svg: `<svg viewBox="0 0 80 80"><line x1="40" y1="12" x2="40" y2="68" stroke-width="2"/></svg>` },
+  { name: "The Spiral", location: "Wellington, NZ", meaning: "We never stop changing. But we always circle back.", svg: `<svg viewBox="0 0 80 80"><path d="M40,40 m0,-22 a22,22 0 1,0 22,22 a14,14 0 1,1 -14,-14 a6,6 0 1,0 6,6"/></svg>` },
+  { name: "Us", location: "Cape Town", meaning: "Two marks. Same height. Never one above the other.", svg: `<svg viewBox="0 0 80 80"><line x1="28" y1="16" x2="28" y2="64"/><line x1="52" y1="16" x2="52" y2="64"/></svg>` },
+  { name: "The Fold", location: "Osaka", meaning: "We fold inward when things get hard. The crease is the strength.", svg: `<svg viewBox="0 0 80 80"><polyline points="14,20 40,60 66,20"/></svg>` },
+  { name: "Unnamed", location: "Quebec", meaning: "A cross with no end points. Open in every direction.", svg: `<svg viewBox="0 0 80 80"><line x1="40" y1="10" x2="40" y2="70"/><line x1="10" y1="40" x2="70" y2="40"/></svg>` },
+];
+
+let remoteKinds = [];
+let uploadedDataUrl = null;
+
+function renderGallery() {
+  const grid = document.getElementById('galleryGrid');
+  const countEl = document.getElementById('kindCount');
+  const allKinds = [...sampleKinds, ...remoteKinds];
+  countEl.textContent = allKinds.length + ' kinds declared';
+  const addCell = grid.querySelector('.add-cell');
+  grid.innerHTML = '';
+  allKinds.forEach(k => {
+    const cell = document.createElement('div');
+    cell.className = 'gallery-cell';
+    const img = k.imageUrl
+      ? `<img src="${k.imageUrl}" style="width:70px;height:70px;object-fit:contain" alt="${k.name}">`
+      : `<div class="gallery-symbol">${k.svg}</div>`;
+    cell.innerHTML = `${img}<div class="cell-reveal">${k.name} · ${k.location}</div>`;
+    cell.title = k.meaning;
+    grid.appendChild(cell);
+  });
+  grid.appendChild(addCell);
+}
+
+async function loadSubmissions() {
+  try {
+    const res = await fetch('/api/submissions');
+    if (res.ok) {
+      remoteKinds = await res.json();
+    }
+  } catch {}
+  renderGallery();
+}
+
+const uploadZone = document.getElementById('uploadZone');
+const uploadInput = document.getElementById('uploadInput');
+const symbolPreview = document.getElementById('symbolPreview');
+
+uploadZone.addEventListener('click', () => uploadInput.click());
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.style.borderColor = 'var(--smudge)'; });
+uploadZone.addEventListener('dragleave', () => uploadZone.style.borderColor = '');
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.style.borderColor = '';
+  if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]);
+});
+uploadInput.addEventListener('change', () => { if (uploadInput.files[0]) loadFile(uploadInput.files[0]); });
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    uploadedDataUrl = e.target.result;
+    symbolPreview.src = uploadedDataUrl;
+    symbolPreview.classList.add('visible');
+    uploadZone.querySelector('p').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+async function handleSubmit() {
+  const name = document.getElementById('groupName').value.trim();
+  const location = document.getElementById('groupLocation').value.trim();
+  const meaning = document.getElementById('groupMeaning').value.trim();
+  if (!name) { showToast('Give your group a name.'); return; }
+  if (!uploadedDataUrl) { showToast('Upload your symbol first.'); return; }
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = 'Submitting...'; btn.disabled = true;
+  try {
+    const blobResp = await fetch(uploadedDataUrl);
+    const blobFile = await blobResp.blob();
+    const file = new File([blobFile], 'symbol.png', { type: blobFile.type || 'image/png' });
+    const fd = new FormData();
+    fd.append('name', name);
+    fd.append('location', location || 'Somewhere');
+    fd.append('meaning', meaning);
+    fd.append('symbol', file);
+    const res = await fetch('/api/submit', { method: 'POST', body: fd });
+    if (!res.ok) throw new Error((await res.json()).error);
+    document.getElementById('groupName').value = '';
+    document.getElementById('groupLocation').value = '';
+    document.getElementById('groupMeaning').value = '';
+    symbolPreview.src = '';
+    symbolPreview.classList.remove('visible');
+    uploadZone.querySelector('p').style.display = '';
+    uploadedDataUrl = null;
+    await loadSubmissions();
+    showToast('Your kind is in the tapestry.');
+    setTimeout(() => document.getElementById('galleryGrid').scrollIntoView({ behavior: 'smooth' }), 600);
+  } catch (e) { showToast(e.message); }
+  finally { btn.textContent = 'Add to the gallery'; btn.disabled = false; }
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+loadSubmissions();
+</script>
 </body>
 </html>
